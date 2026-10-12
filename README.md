@@ -22,9 +22,9 @@ Wayland: libinput 1.32, mutter 51, Fedora 45.
 
 - `20-thumb-zone.lua` hides touches that start in three zones, so a resting
   thumb or palm never reaches libinput.
-  - Why: the resting thumb turned pointer motion into two-finger scrolling,
-    and libinput's own thumb detection mistook the index finger for a thumb
-    and dropped its taps.
+  - Why: libinput has exclusion zones of its own, but they are small, their
+    size cannot be changed, and its thumb detection expects the thumb at the
+    bottom of the pad, not at the top.
   - A hidden touch that moves 5 mm out of its zone towards the center becomes
     visible again.
   - When three fingers are down, a hidden touch in an edge strip becomes
