@@ -88,7 +88,7 @@ below is libinput's default touchpad curve, sampled for this touchpad at the
 0.27 speed setting, with one change:
 
 - Below 14 mm/s it is unchanged, so slow, precise movement stays the same.
-- Between about 25 and 230 mm/s the gain is up to 25% higher, where the
+- Between about 25 and 230 mm/s the gain is up to 35% higher, where the
   default felt sluggish.
 - Fast flicks return to the default.
 - The curve applies only to pointer motion. Scrolling runs at 1:1 under the
@@ -96,11 +96,13 @@ below is libinput's default touchpad curve, sampled for this touchpad at the
 
 ```sh
 gsettings set org.gnome.desktop.peripherals.touchpad custom-accel-config \
-    "{'pointer-step': <0.15>, 'pointer-speeds': <[0.0, 0.073, 0.171, 0.259, 0.358, 0.471, 0.594, 0.723, 0.849, 0.959, 1.066, 1.172, 1.279, 1.385, 1.492, 1.599, 1.705, 1.812, 1.918, 2.025, 2.131, 2.238, 2.345, 2.451, 2.558, 2.664, 2.771, 2.877, 2.988, 3.137, 3.291, 3.452, 3.619, 3.793, 3.973, 4.161, 4.357, 4.561, 4.773, 4.993, 5.222, 5.46, 5.708, 5.966, 6.223, 6.472, 6.714, 6.949, 7.177, 7.398, 7.614, 7.825, 8.032, 8.238, 8.444, 8.653, 8.868, 9.092, 9.329, 9.583, 9.861, 10.167, 10.508, 10.891]>}"
+    "{'pointer-step': <0.15>, 'pointer-speeds': <[0.0, 0.073, 0.171, 0.26, 0.365, 0.488, 0.627, 0.774, 0.915, 1.036, 1.151, 1.266, 1.381, 1.496, 1.611, 1.726, 1.842, 1.957, 2.072, 2.187, 2.302, 2.417, 2.532, 2.647, 2.762, 2.877, 2.993, 3.108, 3.227, 3.388, 3.555, 3.728, 3.908, 4.096, 4.291, 4.494, 4.706, 4.925, 5.154, 5.392, 5.64, 5.897, 6.165, 6.443, 6.717, 6.978, 7.224, 7.457, 7.677, 7.884, 8.079, 8.263, 8.439, 8.608, 8.774, 8.939, 9.109, 9.286, 9.478, 9.689, 9.928, 10.202, 10.519, 10.891]>}"
 gsettings set org.gnome.desktop.peripherals.touchpad accel-profile custom
 ```
 
-`accel-profile default` switches back.
+- `accel-profile default` switches back.
+- To generate your own middle-section boost, run `./accel-curve.py --boost 20`.
+  See `--help` for the range, the speed setting and the touchpad resolution.
 
 No desktop offers a graphical editor for this curve yet. GNOME 51 has only the
 `gsettings` key. KDE has a curve editor in review for Plasma 6.9
