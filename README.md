@@ -10,9 +10,8 @@ making the touchpad behave as close to its Windows calibration as possible.
 The default sizes fit the author, who is right handed:
 
 - The left thumb rests on the top edge of the touchpad while typing.
-- The right palm rests along the right edge.
-- For a left-handed user, mirror the zones: move the thumb zone to the top
-  right corner and the palm strip to the left edge.
+- The palms rest along the left and right edges.
+- For a left-handed user, move the thumb zone to the top right corner.
 - Each size is a variable at the top of its plugin file.
 
 Tested on the UX3607OA (`hid-over-i2c 2808:0219 Touchpad`) with GNOME on
@@ -20,7 +19,7 @@ Wayland: libinput 1.32, mutter 51, Fedora 45.
 
 ## Plugins
 
-- `20-thumb-zone.lua` hides touches that start in two zones, so a resting
+- `20-thumb-zone.lua` hides touches that start in three zones, so a resting
   thumb or palm never reaches libinput.
   - Why: the resting thumb turned pointer motion into two-finger scrolling,
     and libinput's own thumb detection mistook the index finger for a thumb
@@ -33,22 +32,23 @@ Wayland: libinput 1.32, mutter 51, Fedora 45.
   - Zones, with the defaults:
 
     ```
-           0        45 mm                                  133   148 mm
-           +---------+-------------------------------------+-----+ 0
-           | thumb   |                                     |     |
-           | zone    |                                     |  p  | 25 mm
-           +---------+                                     |  a  |
-           |                                               |  l  |
-           |                    free                       |  m  |
-           |                                               |     |
-           +-----------------------------------------------+-----+ 97 mm
+           0   15     45 mm                                 133   148 mm
+           +-----+---+-------------------------------------+-----+ 0
+           |     |   |                                     |     |
+           |  p  | thumb zone                              |  p  | 25 mm
+           |  a  +---+                                     |  a  |
+           |  l  |                                         |  l  |
+           |  m  |                  free                   |  m  |
+           |     |                                         |     |
+           +-----+-----------------------------------------+-----+ 97 mm
     ```
 
     | Variable        | Default | Meaning                                         |
     | --------------- | ------- | ----------------------------------------------- |
     | `ZONE_MM`       | 25      | height of the thumb zone, from the top edge     |
     | `ZONE_WIDTH_MM` | 45      | width of the thumb zone, from the left edge     |
-    | `RIGHT_ZONE_MM` | 15      | width of the palm strip, from the right edge    |
+    | `LEFT_ZONE_MM`  | 15      | width of the palm strip, from the left edge     |
+| `RIGHT_ZONE_MM` | 15      | width of the palm strip, from the right edge    |
     | `ESCAPE_MM`     | 5       | travel out of a zone that makes a touch visible |
 
 - `30-rest-deadzone.lua` removes the phantom scroll after a two-finger scroll

@@ -8,21 +8,21 @@
 -- lowest touch. The rest of the top edge is ordinary touchpad, so scrolls,
 -- swipes and pinches may start there.
 --
--- Touches that start in a strip along the right edge are hidden as well,
--- because the right palm rests there while typing. libinput's own edge palm
--- zone is at most 8 mm wide.
+-- Touches that start in a strip along the left or right edge are hidden as
+-- well, because the palms rest there while typing. libinput's own edge palm
+-- zones are at most 8 mm wide.
 --
 -- The plugin hides such a touch instead of marking it as MT_TOOL_PALM,
 -- because libinput 1.32 still uses palm touches for its multi-finger thumb
 -- detection: a finger that lands more than 25 mm below a resting palm is
 -- classified as a thumb, and libinput then ignores that finger's taps.
 --
--- A touch in the right strip is hidden only while at most one other finger is
--- down. A resting right palm never comes with two more fingers, so when three
--- or more finger touches are down, the hidden touch is shown as a new touch
--- and a three-finger swipe that reaches into the right strip still has three
--- fingers. A touch in the top strip stays hidden regardless, because the left
--- thumb rests there while the right hand scrolls with two fingers.
+-- A touch in an edge strip is hidden only while at most one other finger is
+-- down. A resting palm never comes with two more fingers, so when three or
+-- more finger touches are down, the hidden touch is shown as a new touch and
+-- a three-finger swipe that reaches into a strip still has three fingers. A
+-- touch in the thumb zone stays hidden regardless, because the left thumb
+-- rests there while the right hand scrolls with two fingers.
 --
 -- A hidden touch sends no events to libinput, and the finger count in
 -- BTN_TOUCH and BTN_TOOL_* counts only the visible touches. A physical click
@@ -46,7 +46,8 @@ DEVICE_NAME = "hid-over-i2c 2808:0219 Touchpad"
 -- of the top edge free for gestures.
 ZONE_MM = 25
 ZONE_WIDTH_MM = 45
--- Width of the palm strip, measured from the right edge.
+-- Width of the palm strips, measured from the left and right edges.
+LEFT_ZONE_MM = 15
 RIGHT_ZONE_MM = 15
 -- Distance past a strip that a hidden touch must reach to become visible.
 ESCAPE_MM = 5
@@ -111,18 +112,20 @@ local function finish_segment(st, seg, out)
 
     if seg.began then
         local top = y ~= nil and y <= st.zone_bottom and x ~= nil and x < st.zone_right
+        local left = x ~= nil and x <= st.left_zone_right
         local right = x ~= nil and x >= st.right_zone_left
         -- The top strip is where the left thumb rests while the right hand
         -- scrolls, so a touch that starts there stays hidden even with three
         -- touches down.
-        st.palm[slot] = (top or right) and { top = top, right = right, resting = top } or false
+        st.palm[slot] = (top or left or right) and { top = top, left = left, right = right, resting = top } or false
     elseif st.palm[slot] then
         -- The touch stays hidden while it is inside the escape margin of any
         -- strip that it started in.
         local p = st.palm[slot]
         local in_top = p.top and (y == nil or y <= st.escape_line)
+        local in_left = p.left and (x == nil or x <= st.left_escape_line)
         local in_right = p.right and (x == nil or x >= st.right_escape_line)
-        if not in_top and not in_right then
+        if not in_top and not in_left and not in_right then
             st.palm[slot] = false
         end
     end
@@ -311,12 +314,15 @@ libinput:connect("new-evdev-device", function(device)
     end
 
     local zone_bottom = ay.minimum + ZONE_MM * ay.resolution
+    local left_zone_right = ax.minimum + LEFT_ZONE_MM * ax.resolution
     local right_zone_left = ax.maximum - RIGHT_ZONE_MM * ax.resolution
     devices[device] = {
         slot = 0,
         lslot = nil,
         zone_bottom = zone_bottom,
         escape_line = zone_bottom + ESCAPE_MM * ay.resolution,
+        left_zone_right = left_zone_right,
+        left_escape_line = left_zone_right + ESCAPE_MM * ax.resolution,
         right_zone_left = right_zone_left,
         zone_right = ax.minimum + ZONE_WIDTH_MM * ax.resolution,
         right_escape_line = right_zone_left - ESCAPE_MM * ax.resolution,

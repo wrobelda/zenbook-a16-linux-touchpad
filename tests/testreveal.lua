@@ -50,3 +50,19 @@ H.send(cat({E("ABS_MT_SLOT",0),E("ABS_MT_TRACKING_ID",21),E("ABS_MT_POSITION_X",
 H.check("top edge at 44 mm from left: hidden (inside zone)", H.count(), 0)
 H.send(cat({E("ABS_MT_TRACKING_ID",-1)}, K(0)), 1030*ms)
 print(H.ok and "ALL PASS (with zone width)" or "SOME FAILED")
+-- 8. left edge strip: hidden with one other finger, escapes inward past 20 mm, revealed with three fingers
+H.send(cat({E("ABS_MT_SLOT",0),E("ABS_MT_TRACKING_ID",30),E("ABS_MT_POSITION_X",300),E("ABS_MT_POSITION_Y",1800)}, K(1)), 1100*ms)
+H.check("left strip touch (9 mm) hidden", H.count(), 0)
+H.send(cat({E("ABS_MT_SLOT",1),E("ABS_MT_TRACKING_ID",31),E("ABS_MT_POSITION_X",2500),E("ABS_MT_POSITION_Y",1800)}, K(2)), 1110*ms)
+H.check("left strip touch + one finger: libinput sees 1", H.count(), 1)
+H.send({E("ABS_MT_SLOT",0),E("ABS_MT_POSITION_X",600)}, 1120*ms)
+H.check("left strip touch at 19 mm: still hidden (escape at 20 mm)", H.count(), 1)
+H.send({E("ABS_MT_POSITION_X",700)}, 1130*ms)
+H.check("left strip touch at 22 mm: visible", H.count(), 2)
+H.send(cat({E("ABS_MT_SLOT",0),E("ABS_MT_TRACKING_ID",-1),E("ABS_MT_SLOT",1),E("ABS_MT_TRACKING_ID",-1)}, K(0)), 1200*ms)
+H.send(cat({E("ABS_MT_SLOT",0),E("ABS_MT_TRACKING_ID",32),E("ABS_MT_POSITION_X",300),E("ABS_MT_POSITION_Y",1800),
+            E("ABS_MT_SLOT",1),E("ABS_MT_TRACKING_ID",33),E("ABS_MT_POSITION_X",900),E("ABS_MT_POSITION_Y",1700),
+            E("ABS_MT_SLOT",2),E("ABS_MT_TRACKING_ID",34),E("ABS_MT_POSITION_X",1500),E("ABS_MT_POSITION_Y",1600)}, K(3)), 1300*ms)
+H.check("left strip touch + two fingers: 3 visible", H.count(), 3)
+H.send(cat({E("ABS_MT_SLOT",0),E("ABS_MT_TRACKING_ID",-1),E("ABS_MT_SLOT",1),E("ABS_MT_TRACKING_ID",-1),E("ABS_MT_SLOT",2),E("ABS_MT_TRACKING_ID",-1)}, K(0)), 1400*ms)
+print(H.ok and "ALL PASS (with left strip)" or "SOME FAILED")
