@@ -45,10 +45,10 @@ Wayland: libinput 1.32, mutter 51, Fedora 45.
 
     | Variable        | Default | Meaning                                         |
     | --------------- | ------- | ----------------------------------------------- |
-    | `ZONE_MM`       | 25      | height of the thumb zone, from the top edge     |
-    | `ZONE_WIDTH_MM` | 45      | width of the thumb zone, from the left edge     |
-    | `LEFT_ZONE_MM`  | 15      | width of the palm strip, from the left edge     |
-    | `RIGHT_ZONE_MM` | 15      | width of the palm strip, from the right edge    |
+    | `THUMB_ZONE_HEIGHT_MM`       | 25      | height of the thumb zone, from the top edge     |
+    | `LEFT_THUMB_ZONE_MM` | 45      | width of the thumb zone, from the left edge     |
+    | `LEFT_PALM_MM`  | 15      | width of the palm strip, from the left edge     |
+    | `RIGHT_PALM_MM` | 15      | width of the palm strip, from the right edge    |
     | `ESCAPE_MM`     | 5       | travel out of a zone that makes a touch visible |
 
 - `30-rest-deadzone.lua` removes the phantom scroll after a two-finger scroll

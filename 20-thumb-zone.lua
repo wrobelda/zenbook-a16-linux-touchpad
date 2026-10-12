@@ -44,11 +44,11 @@ DEVICE_NAME = "hid-over-i2c 2808:0219 Touchpad"
 -- left edges. The resting left thumb was recorded 31 mm from the left edge and
 -- 6 mm from the top; the width leaves a margin around that and keeps the rest
 -- of the top edge free for gestures.
-ZONE_MM = 25
-ZONE_WIDTH_MM = 45
+THUMB_ZONE_HEIGHT_MM = 25
+LEFT_THUMB_ZONE_MM = 45
 -- Width of the palm strips, measured from the left and right edges.
-LEFT_ZONE_MM = 15
-RIGHT_ZONE_MM = 15
+LEFT_PALM_MM = 15
+RIGHT_PALM_MM = 15
 -- Distance past a strip that a hidden touch must reach to become visible.
 ESCAPE_MM = 5
 
@@ -313,9 +313,9 @@ libinput:connect("new-evdev-device", function(device)
         keys[usage] = usages[usage] ~= nil or nil
     end
 
-    local zone_bottom = ay.minimum + ZONE_MM * ay.resolution
-    local left_zone_right = ax.minimum + LEFT_ZONE_MM * ax.resolution
-    local right_zone_left = ax.maximum - RIGHT_ZONE_MM * ax.resolution
+    local zone_bottom = ay.minimum + THUMB_ZONE_HEIGHT_MM * ay.resolution
+    local left_zone_right = ax.minimum + LEFT_PALM_MM * ax.resolution
+    local right_zone_left = ax.maximum - RIGHT_PALM_MM * ax.resolution
     devices[device] = {
         slot = 0,
         lslot = nil,
@@ -324,7 +324,7 @@ libinput:connect("new-evdev-device", function(device)
         left_zone_right = left_zone_right,
         left_escape_line = left_zone_right + ESCAPE_MM * ax.resolution,
         right_zone_left = right_zone_left,
-        zone_right = ax.minimum + ZONE_WIDTH_MM * ax.resolution,
+        zone_right = ax.minimum + LEFT_THUMB_ZONE_MM * ax.resolution,
         right_escape_line = right_zone_left - ESCAPE_MM * ax.resolution,
         x = {},
         y = {},
