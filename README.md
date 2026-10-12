@@ -88,7 +88,7 @@ below is libinput's default touchpad curve, sampled for this touchpad at the
 0.27 speed setting, with one change:
 
 - Below 14 mm/s it is unchanged, so slow, precise movement stays the same.
-- Between about 25 and 230 mm/s the gain is up to 15% higher, where the
+- Between about 25 and 230 mm/s the gain is up to 25% higher, where the
   default felt sluggish.
 - Fast flicks return to the default.
 - The curve applies only to pointer motion. Scrolling runs at 1:1 under the
@@ -96,7 +96,7 @@ below is libinput's default touchpad curve, sampled for this touchpad at the
 
 ```sh
 gsettings set org.gnome.desktop.peripherals.touchpad custom-accel-config \
-    "{'pointer-step': <0.15>, 'pointer-speeds': <[0.0, 0.073, 0.171, 0.258, 0.351, 0.453, 0.561, 0.673, 0.782, 0.882, 0.98, 1.079, 1.177, 1.275, 1.373, 1.471, 1.569, 1.667, 1.765, 1.863, 1.961, 2.059, 2.157, 2.255, 2.353, 2.451, 2.549, 2.647, 2.749, 2.886, 3.028, 3.176, 3.329, 3.489, 3.655, 3.828, 4.008, 4.196, 4.391, 4.593, 4.804, 5.024, 5.252, 5.488, 5.728, 5.967, 6.204, 6.441, 6.677, 6.913, 7.149, 7.386, 7.625, 7.867, 8.114, 8.366, 8.627, 8.897, 9.18, 9.477, 9.794, 10.132, 10.496, 10.89]>}"
+    "{'pointer-step': <0.15>, 'pointer-speeds': <[0.0, 0.073, 0.171, 0.259, 0.358, 0.471, 0.594, 0.723, 0.849, 0.959, 1.066, 1.172, 1.279, 1.385, 1.492, 1.599, 1.705, 1.812, 1.918, 2.025, 2.131, 2.238, 2.345, 2.451, 2.558, 2.664, 2.771, 2.877, 2.988, 3.137, 3.291, 3.452, 3.619, 3.793, 3.973, 4.161, 4.357, 4.561, 4.773, 4.993, 5.222, 5.46, 5.708, 5.966, 6.223, 6.472, 6.714, 6.949, 7.177, 7.398, 7.614, 7.825, 8.032, 8.238, 8.444, 8.653, 8.868, 9.092, 9.329, 9.583, 9.861, 10.167, 10.508, 10.891]>}"
 gsettings set org.gnome.desktop.peripherals.touchpad accel-profile custom
 ```
 
