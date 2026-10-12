@@ -26,21 +26,21 @@ Wayland: libinput 1.32, mutter 51, Fedora 45.
     and dropped its taps.
   - A hidden touch that moves 5 mm out of its zone towards the center becomes
     visible again.
-  - When three fingers are down, a hidden touch in the right strip becomes
+  - When three fingers are down, a hidden touch in an edge strip becomes
     visible. A resting palm never comes with two more fingers, but a
     three-finger swipe does.
   - Zones, with the defaults:
 
     ```
-           0   15     45 mm                                 133   148 mm
-           +-----+---+-------------------------------------+-----+ 0
-           |     |   |                                     |     |
-           |  p  | thumb zone                              |  p  | 25 mm
-           |  a  +---+                                     |  a  |
-           |  l  |                                         |  l  |
-           |  m  |                  free                   |  m  |
-           |     |                                         |     |
-           +-----+-----------------------------------------+-----+ 97 mm
+         0    15        45 mm                              133   148 mm
+         +-----+---------+---------------------------------+-----+ 0
+         |     |  thumb  |                                 |     |
+         |  p  |  zone   |                                 |  p  | 25 mm
+         |  a  +---------+                                 |  a  |
+         |  l  |                                           |  l  |
+         |  m  |                  free                     |  m  |
+         |     |                                           |     |
+         +-----+-------------------------------------------+-----+ 97 mm
     ```
 
     | Variable        | Default | Meaning                                         |
