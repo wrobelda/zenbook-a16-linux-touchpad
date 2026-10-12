@@ -6,7 +6,8 @@
 -- one-finger pointer motion into two-finger scrolling. libinput's own thumb
 -- detection does not help here, because it assumes that the thumb is the
 -- lowest touch. The rest of the top edge is ordinary touchpad, so scrolls,
--- swipes and pinches may start there.
+-- swipes and pinches may start there. A mirrored zone in the top right
+-- corner is available for left-handed users and is off by default.
 --
 -- Touches that start in a strip along the left or right edge are hidden as
 -- well, because the palms rest there while typing. libinput's own edge palm
@@ -46,6 +47,9 @@ DEVICE_NAME = "hid-over-i2c 2808:0219 Touchpad"
 -- of the top edge free for gestures.
 THUMB_ZONE_HEIGHT_MM = 25
 LEFT_THUMB_ZONE_MM = 45
+-- The same zone in the top right corner, for a left-handed user whose right
+-- thumb rests there. 0 disables it.
+RIGHT_THUMB_ZONE_MM = 0
 -- Width of the palm strips, measured from the left and right edges.
 LEFT_PALM_MM = 15
 RIGHT_PALM_MM = 15
@@ -111,7 +115,8 @@ local function finish_segment(st, seg, out)
     end
 
     if seg.began then
-        local top = y ~= nil and y <= st.zone_bottom and x ~= nil and x < st.zone_right
+        local top = y ~= nil and y <= st.zone_bottom and x ~= nil
+            and (x < st.zone_right or x > st.right_thumb_left)
         local left = x ~= nil and x <= st.left_zone_right
         local right = x ~= nil and x >= st.right_zone_left
         -- The top strip is where the left thumb rests while the right hand
@@ -325,6 +330,8 @@ libinput:connect("new-evdev-device", function(device)
         left_escape_line = left_zone_right + ESCAPE_MM * ax.resolution,
         right_zone_left = right_zone_left,
         zone_right = ax.minimum + LEFT_THUMB_ZONE_MM * ax.resolution,
+        -- With a width of 0 the right thumb zone is empty: no x exceeds max.
+        right_thumb_left = ax.maximum - RIGHT_THUMB_ZONE_MM * ax.resolution,
         right_escape_line = right_zone_left - ESCAPE_MM * ax.resolution,
         x = {},
         y = {},

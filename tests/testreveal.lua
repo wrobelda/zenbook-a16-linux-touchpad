@@ -66,3 +66,8 @@ H.send(cat({E("ABS_MT_SLOT",0),E("ABS_MT_TRACKING_ID",32),E("ABS_MT_POSITION_X",
 H.check("left strip touch + two fingers: 3 visible", H.count(), 3)
 H.send(cat({E("ABS_MT_SLOT",0),E("ABS_MT_TRACKING_ID",-1),E("ABS_MT_SLOT",1),E("ABS_MT_TRACKING_ID",-1),E("ABS_MT_SLOT",2),E("ABS_MT_TRACKING_ID",-1)}, K(0)), 1400*ms)
 print(H.ok and "ALL PASS (with left strip)" or "SOME FAILED")
+-- 9. right thumb zone: off by default, so the top right corner outside the palm strip is visible
+H.send(cat({E("ABS_MT_SLOT",0),E("ABS_MT_TRACKING_ID",40),E("ABS_MT_POSITION_X",4000),E("ABS_MT_POSITION_Y",200)}, K(1)), 1500*ms)
+H.check("top right (125 mm) with RIGHT_THUMB_ZONE_MM=0: visible", H.count(), 1)
+H.send(cat({E("ABS_MT_TRACKING_ID",-1)}, K(0)), 1510*ms)
+print(H.ok and "ALL PASS (right thumb zone off)" or "SOME FAILED")

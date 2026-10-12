@@ -11,7 +11,8 @@ The default sizes fit the author, who is right handed:
 
 - The left thumb rests on the top edge of the touchpad while typing.
 - The palms rest along the left and right edges.
-- For a left-handed user, move the thumb zone to the top right corner.
+- For a left-handed user, set `LEFT_THUMB_ZONE_MM` to 0 and
+  `RIGHT_THUMB_ZONE_MM` to 45.
 - Each size is a variable at the top of its plugin file.
 
 Tested on the UX3607OA (`hid-over-i2c 2808:0219 Touchpad`) with GNOME on
@@ -43,13 +44,14 @@ Wayland: libinput 1.32, mutter 51, Fedora 45.
          +-----+-------------------------------------------+-----+ 97 mm
     ```
 
-    | Variable        | Default | Meaning                                         |
-    | --------------- | ------- | ----------------------------------------------- |
-    | `THUMB_ZONE_HEIGHT_MM`       | 25      | height of the thumb zone, from the top edge     |
-    | `LEFT_THUMB_ZONE_MM` | 45      | width of the thumb zone, from the left edge     |
-    | `LEFT_PALM_MM`  | 15      | width of the palm strip, from the left edge     |
-    | `RIGHT_PALM_MM` | 15      | width of the palm strip, from the right edge    |
-    | `ESCAPE_MM`     | 5       | travel out of a zone that makes a touch visible |
+    | Variable               | Default | Meaning                                              |
+    | ---------------------- | ------- | ---------------------------------------------------- |
+    | `THUMB_ZONE_HEIGHT_MM` | 25      | height of the thumb zones, from the top edge         |
+    | `LEFT_THUMB_ZONE_MM`   | 45      | width of the left thumb zone, from the left edge     |
+    | `RIGHT_THUMB_ZONE_MM`  | 0       | width of the right thumb zone, from the right edge   |
+    | `LEFT_PALM_MM`         | 15      | width of the left palm strip                         |
+    | `RIGHT_PALM_MM`        | 15      | width of the right palm strip                        |
+    | `ESCAPE_MM`            | 5       | travel out of a zone that makes a touch visible      |
 
 - `30-rest-deadzone.lua` removes the phantom scroll after a two-finger scroll
   that ends with a pause.
