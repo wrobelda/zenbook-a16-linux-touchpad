@@ -2,8 +2,10 @@
 
 The A16 touchpad reports only finger positions, with no pressure and no contact
 size. libinput therefore cannot tell a resting thumb from a finger, and it
-cannot tell that a finger is lifting. The plugins below fill those gaps. They
-change the touch events before libinput sees them.
+cannot tell that a finger is lifting.
+
+The plugins in this repository intend to fill those gaps, effectively
+making the touchpad behave as close to its Windows calibration as possible.
 
 The default sizes fit the author, who is right handed:
 
