@@ -13,8 +13,8 @@ The default sizes fit the author, who is right handed:
   right corner and the palm strip to the left edge.
 - Each size is a variable at the top of its plugin file.
 
-Tested with UX3607OA, `hid-over-i2c 2808:0219 Touchpad` under GNOME on
-Wayland. Tested with libinput 1.32, mutter 51 and Fedora 45.
+Tested on the UX3607OA (`hid-over-i2c 2808:0219 Touchpad`) with GNOME on
+Wayland: libinput 1.32, mutter 51, Fedora 45.
 
 ## Plugins
 
