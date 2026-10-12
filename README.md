@@ -83,23 +83,20 @@ Wayland: libinput 1.32, mutter 51, Fedora 45.
 
 ## Acceleration curve
 
-GNOME 51 can hand libinput a custom pointer acceleration curve.
-`tests/accel-curve.py` generates one:
+GNOME 51 can hand libinput a custom pointer acceleration curve. The curve
+below is libinput's default touchpad curve, sampled for this touchpad at the
+0.27 speed setting, with one change:
 
-- It copies libinput's default touchpad curve at the speed setting it was
-  generated for.
 - Below 14 mm/s it is unchanged, so slow, precise movement stays the same.
-- Between about 25 and 230 mm/s it raises the gain by up to 15%, where the
+- Between about 25 and 230 mm/s the gain is up to 15% higher, where the
   default felt sluggish.
 - Fast flicks return to the default.
 - The curve applies only to pointer motion. Scrolling runs at 1:1 under the
   custom profile, and plugin 40 compensates for that.
 
-The script prints the curve. Apply it with:
-
 ```sh
 gsettings set org.gnome.desktop.peripherals.touchpad custom-accel-config \
-    "{'pointer-step': <0.15>, 'pointer-speeds': <[...points from the script...]>}"
+    "{'pointer-step': <0.15>, 'pointer-speeds': <[0.0, 0.073, 0.171, 0.258, 0.351, 0.453, 0.561, 0.673, 0.782, 0.882, 0.98, 1.079, 1.177, 1.275, 1.373, 1.471, 1.569, 1.667, 1.765, 1.863, 1.961, 2.059, 2.157, 2.255, 2.353, 2.451, 2.549, 2.647, 2.749, 2.886, 3.028, 3.176, 3.329, 3.489, 3.655, 3.828, 4.008, 4.196, 4.391, 4.593, 4.804, 5.024, 5.252, 5.488, 5.728, 5.967, 6.204, 6.441, 6.677, 6.913, 7.149, 7.386, 7.625, 7.867, 8.114, 8.366, 8.627, 8.897, 9.18, 9.477, 9.794, 10.132, 10.496, 10.89]>}"
 gsettings set org.gnome.desktop.peripherals.touchpad accel-profile custom
 ```
 

@@ -22,4 +22,4 @@ writes, per frame, the kernel's touches and the touches libinput would see:
     OUT=trace.txt lua trace2.lua recording.yml ../20-thumb-zone.lua ../30-rest-deadzone.lua ../35-lift-trim.lua ../40-scroll-scale.lua
 
 `lifts.py` and `rolloff.py` summarize finger motion before each lift from such
-a trace; `accel-curve.py` generates the custom pointer acceleration curve.
+a trace.
