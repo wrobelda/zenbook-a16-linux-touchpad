@@ -102,6 +102,11 @@ gsettings set org.gnome.desktop.peripherals.touchpad accel-profile custom
 
 `accel-profile default` switches back.
 
+No desktop offers a graphical editor for this curve yet. GNOME 51 has only the
+`gsettings` key. KDE has a curve editor in review for Plasma 6.9
+([plasma-desktop!3569](https://invent.kde.org/plasma/plasma-desktop/-/merge_requests/3569),
+depending on [kwin!6937](https://invent.kde.org/plasma/kwin/-/merge_requests/6937)).
+
 ## Install
 
 ```sh
